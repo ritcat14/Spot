@@ -45,8 +45,7 @@ public class Main implements Runnable {
             if(System.currentTimeMillis() - timer > 1000) {
                 finalTPS = TPS;
                 finalFPS = FPS;
-                System.out.println("UPS:" + finalTPS);
-                System.out.println("FPS:" + finalFPS);
+                frame.setCounters(finalTPS, finalFPS);
                 timer += 1000;
                 TPS = 0;
                 FPS = 0;

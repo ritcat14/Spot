@@ -1,7 +1,6 @@
 package core.graphics;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Frame extends JFrame {
 
@@ -30,6 +29,10 @@ public class Frame extends JFrame {
         requestFocus();
     }
 
+    public void setCounters(int finalTPS, int finalFPS) {
+        gameCanvas.setCounters(finalTPS, finalFPS);
+    }
+
     public int getWidth() {
         return width;
     }
@@ -46,5 +49,4 @@ public class Frame extends JFrame {
         gameCanvas.close();
 
     }
-
 }

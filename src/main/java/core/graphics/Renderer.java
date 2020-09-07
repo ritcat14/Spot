@@ -15,4 +15,13 @@ public class Renderer {
         graphics.drawImage(image, 0, 0, null);
     }
 
+    public void renderString(int x, int y, Font font, Color colour, String string) {
+        Color originC = graphics.getColor();
+        Font originF = graphics.getFont();
+        graphics.setColor(colour);
+        graphics.setFont(font);
+        graphics.drawString(string, x, y);
+        graphics.setColor(originC);
+        graphics.setFont(originF);
+    }
 }

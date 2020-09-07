@@ -10,6 +10,8 @@ public class GameCanvas extends Canvas {
     private Renderer renderer;
     private int width, height;
 
+    private int TPS, FPS;
+
     public GameCanvas(int width, int height) {
         this.width = width;
         this.height = height;
@@ -32,13 +34,21 @@ public class GameCanvas extends Canvas {
         graphics.setColor(Color.GRAY);
         graphics.fillRect(0, 0, getWidth(), getHeight());
         renderer.setGraphics(graphics);
+
+        renderer.renderString(15, 25, new Font("Calibri", Font.BOLD, 25), Color.yellow, "FPS:" + FPS);
+        renderer.renderString(15, 50, new Font("Calibri", Font.BOLD, 25), Color.yellow, "UPS:" + TPS);
+
         bs.getDrawGraphics().drawImage(currentFrameBuffer, 0, 0, getWidth(), getHeight(), null);
         graphics.dispose();
         bs.show();
     }
 
+    public void setCounters(int finalTPS, int finalFPS) {
+        FPS = finalFPS;
+        TPS = finalTPS;
+    }
+
     public void close() {
 
     }
-
 }
