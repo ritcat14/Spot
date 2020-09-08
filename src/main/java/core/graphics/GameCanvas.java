@@ -32,12 +32,11 @@ public class GameCanvas extends Canvas {
             return;
         }
         Graphics2D graphics = (Graphics2D) currentFrameBuffer.getGraphics();
-        graphics.setColor(Color.GRAY);
-        graphics.fillRect(0, 0, getWidth(), getHeight());
         renderer.setGraphics(graphics);
+        renderer.fillRectangle(new Rectangle(0, 0, width, height), Color.GRAY);
 
-        renderer.renderString(15, 25, new Font("Calibri", Font.BOLD, 25), Color.yellow, "FPS:" + FPS);
-        renderer.renderString(15, 50, new Font("Calibri", Font.BOLD, 25), Color.yellow, "UPS:" + TPS);
+        renderer.renderString("FPS:" + FPS, new Point(15, 25), Color.yellow);
+        renderer.renderString("UPS:" + TPS, new Point(15, 50), Color.yellow);
 
         bs.getDrawGraphics().drawImage(currentFrameBuffer, 0, 0, getWidth(), getHeight(), null);
         graphics.dispose();
