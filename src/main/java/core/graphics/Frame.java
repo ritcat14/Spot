@@ -4,11 +4,13 @@ import javax.swing.*;
 
 public class Frame extends JFrame {
 
+    private static final long serialVersionUID = 1L;
+    
+    private final GameCanvas gameCanvas;
+
     private int width, height;
 
-    private GameCanvas gameCanvas;
-
-    public Frame(int width, int height) {
+    public Frame(final int width, final int height) {
         this.width = width;
         this.height = height;
 
@@ -22,14 +24,14 @@ public class Frame extends JFrame {
 
         pack();
 
-        //addWindowListener(this);
+        // addWindowListener(this);
 
         setLocationRelativeTo(null);
         setVisible(true);
         requestFocus();
     }
 
-    public void setCounters(int finalTPS, int finalFPS) {
+    public void setCounters(final int finalTPS, final int finalFPS) {
         gameCanvas.setCounters(finalTPS, finalFPS);
     }
 

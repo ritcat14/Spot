@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class GameCanvas extends Canvas {
 
+    private static final long serialVersionUID = 1L;
     private BufferedImage currentFrameBuffer;
     private Renderer renderer;
     private int width, height;
