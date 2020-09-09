@@ -14,6 +14,8 @@ public abstract class State {
         return this.stateName == stateName;
     }
 
+    public abstract void init();
+
     public abstract void update();
     
     public abstract void render(Renderer renderer);

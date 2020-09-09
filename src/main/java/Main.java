@@ -64,7 +64,7 @@ public class Main implements Runnable {
 
     private void update() {
         TPS++;
-        // Update
+        stateManager.update();
     }
 
     private void render() {

@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 
 public class Renderer {
 
-    private final Color staticColour = Color.BLACK;
-    private final Font staticFont = new Font("Calibri", Font.BOLD, 25);
+    public static final Color staticColour = Color.BLACK;
+    public static Font staticFont = new Font("Calibri", Font.BOLD, 25);
 
     private Graphics2D graphics;
 

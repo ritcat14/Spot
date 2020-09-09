@@ -1,5 +1,6 @@
 package core.states;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import core.graphics.Renderer;
@@ -14,14 +15,24 @@ public class StateManager {
 
     private boolean rendering, updating;
 
+    public StateManager() {
+        states = new ArrayList<>();
+        statesToAdd = new ArrayList<>();
+    }
+
     public void update() {
         if (!rendering) {
             if (statesToAdd.size() > 0) {
+                if (currentState == null) {
+                    currentState = statesToAdd.get(0);
+                    currentState.init();
+                }
                 states.addAll(statesToAdd);
                 statesToAdd.clear();
             }
             if (requestedState != null) {
                 currentState = requestedState;
+                currentState.init();
                 requestedState = null;
             }
         }
@@ -53,7 +64,7 @@ public class StateManager {
                 if (newState != null) {
                     if (updating || rendering) requestedState = newState;
                 } else {
-                    currentState = newState;
+                    // State does not exist/was not found
                 }
             }
         }
