@@ -2,10 +2,14 @@ package core.graphics;
 
 import javax.swing.*;
 
+import core.states.StateManager;
+
 public class Frame extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    
+    public static int WIDTH;
+    public static int HEIGHT;
+
     private final GameCanvas gameCanvas;
 
     private int width, height;
@@ -13,6 +17,8 @@ public class Frame extends JFrame {
     public Frame(final int width, final int height) {
         this.width = width;
         this.height = height;
+        WIDTH = width;
+        HEIGHT = height;
 
         gameCanvas = new GameCanvas(width, height);
 
@@ -43,8 +49,8 @@ public class Frame extends JFrame {
         return height;
     }
 
-    public void render() {
-        gameCanvas.render();
+    public void render(StateManager stateManager) {
+        gameCanvas.render(stateManager);
     }
 
     public void close() {

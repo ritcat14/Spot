@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import core.states.StateManager;
+
 public class GameCanvas extends Canvas {
 
     private static final long serialVersionUID = 1L;
@@ -24,7 +26,7 @@ public class GameCanvas extends Canvas {
         requestFocus();
     }
 
-    public void render() {
+    public void render(StateManager stateManager) {
         requestFocus();
         BufferStrategy bs = getBufferStrategy();
         if (bs == null) {
@@ -34,6 +36,8 @@ public class GameCanvas extends Canvas {
         Graphics2D graphics = (Graphics2D) currentFrameBuffer.getGraphics();
         renderer.setGraphics(graphics);
         renderer.fillRectangle(new Rectangle(0, 0, width, height), Color.GRAY);
+
+        stateManager.render(renderer);
 
         renderer.renderString("FPS:" + FPS, new Point(15, 25), Color.yellow);
         renderer.renderString("UPS:" + TPS, new Point(15, 50), Color.yellow);
@@ -49,6 +53,6 @@ public class GameCanvas extends Canvas {
     }
 
     public void close() {
-
+        
     }
 }

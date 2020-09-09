@@ -70,6 +70,20 @@ public class Renderer {
         renderString(string, point, colour, staticFont);
     }
 
+    public void renderString(String string, Point point, Font font) {
+        renderString(string, point, staticColour, font);
+    }
+
+    public void renderString(String string, Point point, Color color, double fontSize) {
+        Font font = staticFont.deriveFont((float)fontSize);
+        renderString(string, point, color, font);
+    }
+
+    public void renderString(String string, Point point, double fontSize) {
+        Font font = staticFont.deriveFont((float)fontSize);
+        renderString(string, point, staticColour, font);
+    }
+
     public void renderString(String string, Point point, Color colour, Font font) {
         graphics.setColor(colour);
         graphics.setFont(font);

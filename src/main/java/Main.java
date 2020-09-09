@@ -1,4 +1,6 @@
 import core.graphics.Frame;
+import core.states.StateManager;
+import game.Start;
 
 import java.awt.*;
 
@@ -11,6 +13,7 @@ public class Main implements Runnable {
 
     private Thread thread;
     private Frame frame;
+    private StateManager stateManager;
 
     private boolean running;
 
@@ -19,6 +22,8 @@ public class Main implements Runnable {
 
     public Main() {
         frame = new Frame(MAX_WIDTH, MAX_HEIGHT);
+        stateManager = new StateManager();
+        stateManager.addState(new Start());
     }
 
     public synchronized void start() {
@@ -64,7 +69,7 @@ public class Main implements Runnable {
 
     private void render() {
         FPS++;
-        frame.render();
+        frame.render(stateManager);
     }
 
     public synchronized void stop() {
@@ -79,6 +84,7 @@ public class Main implements Runnable {
     }
 
     public void close() {
+        stateManager.close();
         frame.close();
     }
 
