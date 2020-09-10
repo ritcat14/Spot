@@ -56,6 +56,5 @@ public class Frame extends JFrame {
 
     public void close() {
         gameCanvas.close();
-
     }
 }

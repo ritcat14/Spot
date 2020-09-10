@@ -2,6 +2,7 @@ package game;
 
 import java.awt.*;
 
+import core.Engine;
 import core.graphics.Frame;
 import core.graphics.Renderer;
 import core.gui.ComponentAnchor;
@@ -55,7 +56,16 @@ public class Start extends State {
         settingstbutton = new GButton(0, 400, 250, 70, "SETTINGS", staticFont.deriveFont((float)60),
                 Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK, MIDDLE, NONE, CENTERX);
         exitbutton = new GButton(0, 500, 250, 70, "EXIT", staticFont.deriveFont((float)60),
-                Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK,MIDDLE, NONE, CENTERX);
+                Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK,MIDDLE, NONE, CENTERX) {
+            @Override
+            protected boolean mousePressed(MouseEvent event) {
+                if (super.mousePressed(event)) {
+                    Engine.exit();
+                    return true;
+                }
+                return false;
+            }
+        };
         title = new GLabel(100, 150, 300, 150, CENTERX, "SPOT", staticFont.deriveFont((float)120),
                 Color.DARK_GRAY, null, MIDDLE, NONE);
     }
