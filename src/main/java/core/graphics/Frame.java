@@ -2,6 +2,9 @@ package core.graphics;
 
 import javax.swing.*;
 
+import core.input.EventListener;
+import core.input.KeyHandler;
+import core.input.MouseHandler;
 import core.states.StateManager;
 
 public class Frame extends JFrame {
@@ -14,13 +17,13 @@ public class Frame extends JFrame {
 
     private int width, height;
 
-    public Frame(final int width, final int height) {
+    public Frame(final int width, final int height, EventListener eventListener) {
         this.width = width;
         this.height = height;
         WIDTH = width;
         HEIGHT = height;
 
-        gameCanvas = new GameCanvas(width, height);
+        gameCanvas = new GameCanvas(width, height, eventListener);
 
         setResizable(false);
         setUndecorated(true);
@@ -29,8 +32,6 @@ public class Frame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         pack();
-
-        // addWindowListener(this);
 
         setLocationRelativeTo(null);
         setVisible(true);

@@ -4,18 +4,25 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import core.input.EventListener;
+import core.input.KeyHandler;
+import core.input.MouseHandler;
 import core.states.StateManager;
 
 public class GameCanvas extends Canvas {
 
     private static final long serialVersionUID = 1L;
+
+    private final KeyHandler keyHandler;
+    private final MouseHandler mouseHandler;
+
     private BufferedImage currentFrameBuffer;
     private Renderer renderer;
     private int width, height;
 
     private int TPS, FPS;
 
-    public GameCanvas(int width, int height) {
+    public GameCanvas(int width, int height, EventListener eventListener) {
         this.width = width;
         this.height = height;
         renderer = new Renderer();
@@ -24,6 +31,13 @@ public class GameCanvas extends Canvas {
 
         setPreferredSize(new Dimension(width, height));
         requestFocus();
+
+        keyHandler = new KeyHandler(eventListener);
+        mouseHandler = new MouseHandler(eventListener);
+
+        addKeyListener(keyHandler);
+        addMouseListener(mouseHandler);
+        addMouseMotionListener(mouseHandler);
     }
 
     public void render(StateManager stateManager) {

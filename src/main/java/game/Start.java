@@ -5,6 +5,7 @@ import java.awt.*;
 import core.graphics.Frame;
 import core.graphics.Renderer;
 import core.gui.GButton;
+import core.input.Event;
 import core.states.State;
 import core.states.StateName;
 
@@ -41,8 +42,12 @@ public class Start extends State {
     }
 
     @Override
+    public void onEvent(Event event) {
+        System.out.println("Event: " + event.getType().toString());
+    }
+
+    @Override
     public void close() {
         
     }
-    
 }

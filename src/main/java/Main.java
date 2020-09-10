@@ -21,8 +21,8 @@ public class Main implements Runnable {
     private int finalTPS, finalFPS;
 
     public Main() {
-        frame = new Frame(MAX_WIDTH, MAX_HEIGHT);
         stateManager = new StateManager();
+        frame = new Frame(MAX_WIDTH, MAX_HEIGHT, stateManager);
         stateManager.addState(new Start());
     }
 

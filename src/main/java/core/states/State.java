@@ -1,8 +1,9 @@
 package core.states;
 
 import core.graphics.Renderer;
+import core.input.EventListener;
 
-public abstract class State {
+public abstract class State implements EventListener {
 
     private StateName stateName;
 

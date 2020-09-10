@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.graphics.Renderer;
+import core.input.Event;
+import core.input.EventListener;
 
-public class StateManager {
+public class StateManager implements EventListener {
     
     private List<State> states;
     private List<State> statesToAdd;
@@ -13,7 +15,7 @@ public class StateManager {
     private State currentState;
     private State requestedState;
 
-    private boolean rendering, updating;
+    private boolean rendering, updating, input;
 
     public StateManager() {
         states = new ArrayList<>();
@@ -21,7 +23,7 @@ public class StateManager {
     }
 
     public void update() {
-        if (!rendering) {
+        if (!rendering && !input) {
             if (statesToAdd.size() > 0) {
                 if (currentState == null) {
                     currentState = statesToAdd.get(0);
@@ -62,7 +64,7 @@ public class StateManager {
             } else {
                 State newState = getState(stateName);
                 if (newState != null) {
-                    if (updating || rendering) requestedState = newState;
+                    if (updating || rendering || input) requestedState = newState;
                 } else {
                     // State does not exist/was not found
                 }
@@ -78,6 +80,15 @@ public class StateManager {
         return null;
     }
 
+    @Override
+    public void onEvent(Event event) {
+        if (currentState != null) {
+            input = true;
+            currentState.onEvent(event);
+            input = false;
+        }
+    }
+
     public void close() {
         for (State state : states) {
             state.close();
@@ -85,5 +96,4 @@ public class StateManager {
         states.clear();
         statesToAdd.clear();
     }
-
 }
