@@ -7,7 +7,7 @@ public abstract class State implements EventListener {
 
     private StateName stateName;
 
-    private State requestedState;
+    private StateName requestedState;
     private boolean requestedChange = false;
 
     public State(StateName stateName) {
@@ -26,7 +26,7 @@ public abstract class State implements EventListener {
 
     public abstract void close();
 
-    public void requestChange(State state) {
+    public void requestChange(StateName state) {
         requestedState = state;
         requestedChange = true;
     }
@@ -35,7 +35,7 @@ public abstract class State implements EventListener {
         return requestedChange;
     }
 
-    public State getRequestedState() {
+    public StateName getRequestedState() {
         return requestedState;
     }
 
@@ -44,4 +44,7 @@ public abstract class State implements EventListener {
         requestedChange = false;
     }
 
+    public StateName getStateName() {
+        return stateName;
+    }
 }

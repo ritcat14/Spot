@@ -1,5 +1,6 @@
 import core.graphics.Frame;
 import core.states.StateManager;
+import game.Game;
 import game.Start;
 
 import java.awt.*;
@@ -24,6 +25,7 @@ public class Main implements Runnable {
         stateManager = new StateManager();
         frame = new Frame(MAX_WIDTH, MAX_HEIGHT, stateManager);
         stateManager.addState(new Start());
+        stateManager.addState(new Game());
     }
 
     public synchronized void start() {

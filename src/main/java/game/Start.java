@@ -16,6 +16,7 @@ import static core.graphics.Renderer.staticFont;
 import static core.gui.ComponentAnchor.CENTERX;
 import static core.gui.text.TextAlignment.MIDDLE;
 import static core.gui.text.TextFormat.NONE;
+import static core.states.StateName.GAME;
 
 public class Start extends State {
 
@@ -40,7 +41,7 @@ public class Start extends State {
             protected boolean mousePressed(MouseEvent event) {
                 if (super.mousePressed(event)) {
                     if (event.getButton() == 1) { // left click
-                        requestChange(new Game());
+                        requestChange(GAME);
                     } else if (event.getButton() == 2) { // middle click
 
                     } else if (event.getButton() == 3) { // right click

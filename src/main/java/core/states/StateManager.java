@@ -33,6 +33,8 @@ public class StateManager implements EventListener {
                 statesToAdd.clear();
             }
             if (requestedState != null) {
+                if (currentState != null && currentState.requestedChange()) currentState.requestComplete();
+
                 currentState = requestedState;
                 currentState.init();
                 requestedState = null;
@@ -41,6 +43,7 @@ public class StateManager implements EventListener {
         if (currentState != null) {
             updating = true;
             currentState.update();
+            if (currentState.requestedChange()) setState(currentState.getRequestedState());
             updating = false;
         }
     }
