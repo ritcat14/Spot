@@ -1,7 +1,17 @@
 package core.graphics;
 
+import core.gui.text.TextAlignment;
+import core.gui.text.TextFormat;
+
 import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextAttribute;
+import java.awt.font.TextLayout;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.text.AttributedCharacterIterator;
+import java.text.AttributedString;
 
 public class Renderer {
 
@@ -62,31 +72,101 @@ public class Renderer {
     *   String Rendering
     */
 
-    public void renderString(String string, Point point) {
-        renderString(string, point, staticColour, staticFont);
+    public Rectangle renderString(String text, Font font, Color color, Rectangle bounds, TextAlignment align, int format) {
+        if (text.length() == 0)
+            return new Rectangle(bounds.x, bounds.y, 0, 0);
+
+        AttributedString attributedString = new AttributedString(text);
+        attributedString.addAttribute(TextAttribute.FOREGROUND, color);
+        attributedString.addAttribute(TextAttribute.FONT, font);
+
+        AttributedCharacterIterator attributedCharIterator = attributedString.getIterator();
+
+        FontRenderContext fontContext = new FontRenderContext(null, !TextFormat.isEnabled(format, TextFormat.NO_ANTI_ALIASING), false);
+        LineBreakMeasurer lineMeasurer = new LineBreakMeasurer(attributedCharIterator, fontContext);
+
+        Point targetLocation = new Point(bounds.x, bounds.y);
+        int nextOffset = 0;
+
+        if (align.isMiddle() || align.isBottom())
+        {
+            if (align.isMiddle())
+                targetLocation.y = bounds.y + (bounds.height / 2);
+            if (align.isBottom())
+                targetLocation.y = bounds.y + bounds.height;
+
+            while (lineMeasurer.getPosition() < text.length())
+            {
+                nextOffset = lineMeasurer.nextOffset(bounds.width);
+                nextOffset = nextTextIndex(nextOffset, lineMeasurer.getPosition(), text);
+
+                TextLayout textLayout = lineMeasurer.nextLayout(bounds.width, nextOffset, false);
+
+                if (align.isMiddle())
+                    targetLocation.y -= (textLayout.getAscent() + textLayout.getLeading() + textLayout.getDescent()) / 2;
+                if (align.isBottom())
+                    targetLocation.y -= (textLayout.getAscent() + textLayout.getLeading() + textLayout.getDescent());
+            }
+
+            lineMeasurer.setPosition(0);
+        }
+
+        if (align.isRight() || align.isCenter())
+            targetLocation.x = bounds.x + bounds.width;
+        Rectangle consumedBounds = new Rectangle(targetLocation.x, targetLocation.y, 0, 0);
+
+        while (lineMeasurer.getPosition() < text.length())
+        {
+            nextOffset = lineMeasurer.nextOffset(bounds.width);
+            nextOffset = nextTextIndex(nextOffset, lineMeasurer.getPosition(), text);
+
+            TextLayout textLayout = lineMeasurer.nextLayout(bounds.width, nextOffset, false);
+            Rectangle2D textBounds = textLayout.getBounds();
+
+            targetLocation.y += textLayout.getAscent();
+            consumedBounds.width = Math.max(consumedBounds.width, (int)textBounds.getWidth());
+
+            switch (align)
+            {
+                case TOP_LEFT:
+                case MIDDLE_LEFT:
+                case BOTTOM_LEFT:
+                    textLayout.draw(graphics, targetLocation.x, targetLocation.y);
+                    break;
+
+                case TOP:
+                case MIDDLE:
+                case BOTTOM:
+                    targetLocation.x = bounds.x + (bounds.width / 2) - (int)(textBounds.getWidth() / 2);
+                    consumedBounds.x = Math.min(consumedBounds.x, targetLocation.x);
+                    textLayout.draw(graphics, targetLocation.x, targetLocation.y);
+                    break;
+
+                case TOP_RIGHT:
+                case MIDDLE_RIGHT:
+                case BOTTOM_RIGHT:
+                    targetLocation.x = bounds.x + bounds.width - (int)textBounds.getWidth();
+                    textLayout.draw(graphics, targetLocation.x, targetLocation.y);
+                    consumedBounds.x = Math.min(consumedBounds.x, targetLocation.x);
+                    break;
+            }
+
+            targetLocation.y += textLayout.getLeading() + textLayout.getDescent();
+        }
+        consumedBounds.height = targetLocation.y - consumedBounds.y;
+
+        return consumedBounds;
     }
 
-    public void renderString(String string, Point point, Color colour) {
-        renderString(string, point, colour, staticFont);
+    private static int nextTextIndex(int nextOffset, int measurerPosition, String text)
+    {
+        for (int i = measurerPosition + 1; i < nextOffset; ++i)
+        {
+            if (text.charAt(i) == '\n')
+                return i;
+        }
+
+        return nextOffset;
     }
 
-    public void renderString(String string, Point point, Font font) {
-        renderString(string, point, staticColour, font);
-    }
-
-    public void renderString(String string, Point point, Color color, double fontSize) {
-        Font font = staticFont.deriveFont((float)fontSize);
-        renderString(string, point, color, font);
-    }
-
-    public void renderString(String string, Point point, double fontSize) {
-        Font font = staticFont.deriveFont((float)fontSize);
-        renderString(string, point, staticColour, font);
-    }
-
-    public void renderString(String string, Point point, Color colour, Font font) {
-        graphics.setColor(colour);
-        graphics.setFont(font);
-        graphics.drawString(string, (int)point.getX(), (int)point.getY());
-    }
 }

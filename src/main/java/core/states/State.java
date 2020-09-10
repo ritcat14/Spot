@@ -7,6 +7,9 @@ public abstract class State implements EventListener {
 
     private StateName stateName;
 
+    private State requestedState;
+    private boolean requestedChange = false;
+
     public State(StateName stateName) {
         this.stateName = stateName;
     }
@@ -22,5 +25,23 @@ public abstract class State implements EventListener {
     public abstract void render(Renderer renderer);
 
     public abstract void close();
+
+    public void requestChange(State state) {
+        requestedState = state;
+        requestedChange = true;
+    }
+
+    public boolean requestedChange() {
+        return requestedChange;
+    }
+
+    public State getRequestedState() {
+        return requestedState;
+    }
+
+    public void requestComplete() {
+        requestedState = null;
+        requestedChange = false;
+    }
 
 }

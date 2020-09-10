@@ -1,25 +1,28 @@
 package core.gui;
 
 import core.graphics.Renderer;
+import core.gui.text.TextAlignment;
+import core.input.*;
+import core.input.Event;
 
 import java.awt.*;
 
-public class GButton extends GComponent {
+import static core.input.Event.Type.*;
 
+public class GButton extends GLabel implements EventListener {
+
+    private Rectangle backgroundRect;
     private String text = "";
-    private Color background;
     private Color foreground;
-    private Color fontColour;
-    private Font font;
 
-    public GButton(int x, int y, int width, int height, String text, Color background, Color foreground, Color fontColour,
-                   Font font) {
-        super(x, y, width, height);
-        this.text = text;
-        this.background = background;
+    private boolean mouseOver = false;
+
+    public GButton(int x, int y, int width, int height, String text, Font font, Color background, Color foreground, Color fontColour,
+                   TextAlignment textAlignment, int textFormat, ComponentAnchor componentAnchor) {
+        super(x, y, width, height, componentAnchor, text, font, fontColour, background, textAlignment, textFormat);
         this.foreground = foreground;
-        this.font = font;
-        this.fontColour = fontColour;
+        int fifPer = (int)Math.ceil(width * 0.15);
+        this.backgroundRect = new Rectangle(this.x - (fifPer / 2), this.y, this.width + fifPer, this.height);
     }
 
     @Override
@@ -29,23 +32,40 @@ public class GButton extends GComponent {
 
     @Override
     public void render(Renderer renderer) {
+        if (mouseOver) renderer.fillRectangle(backgroundRect, foreground);
+
         renderer.fillRectangle(this, background);
-        renderer.renderString(text, new Point(x, y + (3 * (height / 4))), fontColour, font);
+
+        super.render(renderer);
     }
 
-    public void setText(String text) {
-        this.text = text;
+    protected boolean mousePressed(MouseEvent event) {
+        return contains(event.getPosition());
     }
 
-    public void setBackground(Color background) {
-        this.background = background;
+    protected boolean mouseReleased(MouseEvent event) {
+        return contains(event.getPosition());
+    }
+
+    protected boolean mouseMoved(MouseEvent event) {
+        mouseOver = contains(event.getPosition());
+        return mouseOver;
+    }
+
+    @Override
+    public void onEvent(Event event) {
+        EventDispatcher dispatcher = new EventDispatcher(event);
+        dispatcher.dispatch(MOUSE_PRESSED, event1 -> mousePressed((MouseEvent) event1));
+        dispatcher.dispatch(MOUSE_RELEASED, event1 -> mouseReleased((MouseEvent) event1));
+        dispatcher.dispatch(MOUSE_MOVED, event1 -> mouseMoved((MouseEvent) event1));
+    }
+
+    @Override
+    public void close() {
+
     }
 
     public void setForeground(Color foreground) {
         this.foreground = foreground;
-    }
-
-    public String getText() {
-        return text;
     }
 }

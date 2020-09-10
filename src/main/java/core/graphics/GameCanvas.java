@@ -4,10 +4,17 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import core.gui.ComponentAnchor;
+import core.gui.GLabel;
 import core.input.EventListener;
 import core.input.KeyHandler;
 import core.input.MouseHandler;
 import core.states.StateManager;
+
+import static core.graphics.Renderer.staticFont;
+import static core.gui.text.TextAlignment.MIDDLE;
+import static core.gui.text.TextAlignment.MIDDLE_LEFT;
+import static core.gui.text.TextFormat.NONE;
 
 public class GameCanvas extends Canvas {
 
@@ -21,6 +28,7 @@ public class GameCanvas extends Canvas {
     private int width, height;
 
     private int TPS, FPS;
+    private GLabel TPSLabal, FPSLabel;
 
     public GameCanvas(int width, int height, EventListener eventListener) {
         this.width = width;
@@ -38,6 +46,12 @@ public class GameCanvas extends Canvas {
         addKeyListener(keyHandler);
         addMouseListener(mouseHandler);
         addMouseMotionListener(mouseHandler);
+
+        TPSLabal = new GLabel(25, 25, 200, 50, ComponentAnchor.NONE, "UPS:", staticFont,
+                Color.YELLOW, null, MIDDLE_LEFT, NONE);
+
+        FPSLabel = new GLabel(25, 50, 200, 50, ComponentAnchor.NONE, "FPS:", staticFont,
+                Color.YELLOW, null, MIDDLE_LEFT, NONE);
     }
 
     public void render(StateManager stateManager) {
@@ -53,8 +67,10 @@ public class GameCanvas extends Canvas {
 
         stateManager.render(renderer);
 
-        renderer.renderString("FPS:" + FPS, new Point(15, 25), Color.yellow);
-        renderer.renderString("UPS:" + TPS, new Point(15, 50), Color.yellow);
+        TPSLabal.setText("UPS:" + TPS);
+        TPSLabal.render(renderer);
+        FPSLabel.setText("FPS:" + FPS);
+        FPSLabel.render(renderer);
 
         bs.getDrawGraphics().drawImage(currentFrameBuffer, 0, 0, getWidth(), getHeight(), null);
         graphics.dispose();
