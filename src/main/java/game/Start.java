@@ -4,7 +4,6 @@ import java.awt.*;
 
 import core.graphics.Frame;
 import core.graphics.Renderer;
-import core.gui.ComponentAnchor;
 import core.gui.GButton;
 import core.gui.GLabel;
 import core.input.Event;

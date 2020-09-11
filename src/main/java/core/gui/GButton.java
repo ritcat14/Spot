@@ -34,7 +34,7 @@ public class GButton extends GLabel implements EventListener {
     public void render(Renderer renderer) {
         if (mouseOver) renderer.fillRectangle(backgroundRect, foreground);
 
-        renderer.fillRectangle(this, background);
+        renderer.fillRectangle(this, colour);
 
         super.render(renderer);
     }
