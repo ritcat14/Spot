@@ -43,6 +43,17 @@ public class Renderer {
         (int)rectangle.getWidth(), (int)rectangle.getHeight(), null);
     }
 
+
+    public void drawBlended(BufferedImage image1, BufferedImage image2, Point point, float alpha) {
+        graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        graphics.drawImage(image1, (int)point.getX(), (int)point.getY(), null);
+        graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f - alpha));
+        graphics.drawImage(image2, (int)point.getX(), (int)point.getY(), null);
+
+        graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+
+    }
+
     /*
     *   Rectangle Rendering
     */

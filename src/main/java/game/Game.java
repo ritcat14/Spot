@@ -38,6 +38,6 @@ public class Game extends State {
 
     @Override
     public void onEvent(Event event) {
-        map.onEvent(event);
+        if (map != null) map.onEvent(event);
     }
 }
