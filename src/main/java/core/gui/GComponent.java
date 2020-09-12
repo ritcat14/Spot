@@ -2,13 +2,14 @@ package core.gui;
 
 import core.graphics.Frame;
 import core.objects.Entity;
+import java.awt.Color;
 
 public abstract class GComponent extends Entity {
 
     protected ComponentAnchor componentAnchor;
 
-    public GComponent(int x, int y, int width, int height, ComponentAnchor componentAnchor) {
-        super(x, y, width, height);
+    public GComponent(int x, int y, int width, int height, Color colour, ComponentAnchor componentAnchor) {
+        super(x, y, width, height, colour);
         this.componentAnchor = componentAnchor;
         setAnchor();
     }

@@ -7,7 +7,7 @@ import core.graphics.Renderer;
 
 public abstract class Entity extends Rectangle {
 
-    private Color colour = Color.BLUE;
+    protected Color colour = Color.BLUE;
 
     public Entity(int x, int y, int width, int height) {
         super(x, y, width, height);
@@ -21,5 +21,9 @@ public abstract class Entity extends Rectangle {
     public abstract void update();
 
     public abstract void render(Renderer renderer);
+
+    public void setColour(Color colour) {
+        this.colour = colour;
+    }
     
 }
