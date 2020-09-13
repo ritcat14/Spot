@@ -12,7 +12,6 @@ import core.input.MouseHandler;
 import core.states.StateManager;
 
 import static core.graphics.Renderer.staticFont;
-import static core.gui.text.TextAlignment.MIDDLE;
 import static core.gui.text.TextAlignment.MIDDLE_LEFT;
 import static core.gui.text.TextFormat.NONE;
 
@@ -25,6 +24,7 @@ public class GameCanvas extends Canvas {
 
     private BufferedImage currentFrameBuffer;
     private Renderer renderer;
+    private Graphics2D graphics;
     private int width, height;
 
     private int TPS, FPS;
@@ -33,7 +33,7 @@ public class GameCanvas extends Canvas {
     public GameCanvas(int width, int height, EventListener eventListener) {
         this.width = width;
         this.height = height;
-        renderer = new Renderer();
+        renderer = new Renderer(this);
 
         currentFrameBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
@@ -61,8 +61,8 @@ public class GameCanvas extends Canvas {
             createBufferStrategy(3);
             return;
         }
-        Graphics2D graphics = (Graphics2D) currentFrameBuffer.getGraphics();
-        renderer.setGraphics(graphics);
+        graphics = (Graphics2D) currentFrameBuffer.getGraphics();
+
         renderer.fillRectangle(new Rectangle(0, 0, width, height), Color.GRAY);
 
         stateManager.render(renderer);
@@ -75,6 +75,14 @@ public class GameCanvas extends Canvas {
         bs.getDrawGraphics().drawImage(currentFrameBuffer, 0, 0, getWidth(), getHeight(), null);
         graphics.dispose();
         bs.show();
+    }
+
+    public Graphics2D getGraphics() {
+        return graphics;
+    }
+
+    public BufferedImage getCurrentFrameBuffer() {
+        return currentFrameBuffer;
     }
 
     public void setCounters(int finalTPS, int finalFPS) {

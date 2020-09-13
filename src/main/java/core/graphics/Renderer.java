@@ -18,11 +18,10 @@ public class Renderer {
     public static final Color staticColour = Color.BLACK;
     public static Font staticFont = new Font("Calibri", Font.BOLD, 25);
 
-    private Graphics2D graphics;
+    private GameCanvas gameCanvas;
 
-    public void setGraphics(Graphics2D graphics) {
-        this.graphics = graphics;
-        graphics.setColor(staticColour);
+    public Renderer(GameCanvas gameCanvas) {
+        this.gameCanvas = gameCanvas;
     }
 
     /*
@@ -39,12 +38,14 @@ public class Renderer {
     }
 
     public void renderImage(BufferedImage image, Rectangle rectangle) {
+        Graphics2D graphics = gameCanvas.getGraphics();
         graphics.drawImage(image, (int)rectangle.getX(), (int)rectangle.getY(),
         (int)rectangle.getWidth(), (int)rectangle.getHeight(), null);
     }
 
 
     public void drawBlended(BufferedImage image1, BufferedImage image2, Point point, float alpha) {
+        Graphics2D graphics = gameCanvas.getGraphics();
         graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         graphics.drawImage(image1, (int)point.getX(), (int)point.getY(), null);
         graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f - alpha));
@@ -63,6 +64,7 @@ public class Renderer {
     }
 
     public void drawRectangle(Rectangle rectangle, Color colour) {
+        Graphics2D graphics = gameCanvas.getGraphics();
         graphics.setColor(colour);
         graphics.drawRect(
             (int)rectangle.getX(), (int)rectangle.getY(), 
@@ -74,6 +76,7 @@ public class Renderer {
     }
 
     public void fillRectangle(Rectangle rectangle, Color colour) {
+        Graphics2D graphics = gameCanvas.getGraphics();
         graphics.setColor(colour);
         graphics.fillRect((int)rectangle.getX(), (int)rectangle.getY(),
         (int)rectangle.getWidth(), (int)rectangle.getHeight());
@@ -84,6 +87,7 @@ public class Renderer {
     */
 
     public Rectangle renderString(String text, Font font, Color color, Rectangle bounds, TextAlignment align, int format) {
+        Graphics2D graphics = gameCanvas.getGraphics();
         if (text.length() == 0)
             return new Rectangle(bounds.x, bounds.y, 0, 0);
 
@@ -180,4 +184,7 @@ public class Renderer {
         return nextOffset;
     }
 
+    public GameCanvas getGameCanvas() {
+        return gameCanvas;
+    }
 }

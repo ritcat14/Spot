@@ -25,5 +25,15 @@ public abstract class Entity extends Rectangle {
     public void setColour(Color colour) {
         this.colour = colour;
     }
-    
+
+    @Override
+    public double getCenterX() {
+        return x + (width/2);
+    }
+
+    @Override
+    public double getCenterY() {
+        return y + (height/2);
+    }
+
 }
