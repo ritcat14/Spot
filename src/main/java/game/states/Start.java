@@ -36,7 +36,7 @@ public class Start extends State {
     public void init() {
         bounds = new Rectangle(25, 25, Frame.WIDTH - 50, Frame.HEIGHT - 50);
         startbutton = new GButton(0, 300, 250, 70, "START", staticFont.deriveFont((float)60),
-                Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK, MIDDLE, NONE, CENTERX) {
+                MIDDLE, NONE, CENTERX) {
             @Override
             protected boolean mousePressed(MouseEvent event) {
                 if (super.mousePressed(event)) {
@@ -53,7 +53,7 @@ public class Start extends State {
             }
         };
         settingstbutton = new GButton(0, 400, 250, 70, "SETTINGS", staticFont.deriveFont((float)60),
-                Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK, MIDDLE, NONE, CENTERX) {
+                MIDDLE, NONE, CENTERX) {
                     @Override
                     protected boolean mousePressed(MouseEvent event) {
                         if (super.mousePressed(event) && event.getButton() == 1) {
@@ -64,7 +64,7 @@ public class Start extends State {
                     }
                 };
         exitbutton = new GButton(0, 500, 250, 70, "EXIT", staticFont.deriveFont((float)60),
-                 ,MIDDLE, NONE, CENTERX) {
+                 MIDDLE, NONE, CENTERX) {
             @Override
             protected boolean mousePressed(MouseEvent event) {
                 if (super.mousePressed(event) && event.getButton() == 1) {
