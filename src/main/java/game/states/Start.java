@@ -1,4 +1,4 @@
-package game;
+package game.states;
 
 import java.awt.*;
 
@@ -16,7 +16,7 @@ import static core.graphics.Renderer.staticFont;
 import static core.gui.ComponentAnchor.CENTERX;
 import static core.gui.text.TextAlignment.MIDDLE;
 import static core.gui.text.TextFormat.NONE;
-import static core.states.StateName.GAME;
+import static core.states.StateName.*;
 
 public class Start extends State {
 
@@ -53,12 +53,21 @@ public class Start extends State {
             }
         };
         settingstbutton = new GButton(0, 400, 250, 70, "SETTINGS", staticFont.deriveFont((float)60),
-                Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK, MIDDLE, NONE, CENTERX);
+                Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK, MIDDLE, NONE, CENTERX) {
+                    @Override
+                    protected boolean mousePressed(MouseEvent event) {
+                        if (super.mousePressed(event) && event.getButton() == 1) {
+                            requestChange(SETTINGS);
+                            return true;
+                        }
+                        return false;
+                    }
+                };
         exitbutton = new GButton(0, 500, 250, 70, "EXIT", staticFont.deriveFont((float)60),
-                Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK,MIDDLE, NONE, CENTERX) {
+                 ,MIDDLE, NONE, CENTERX) {
             @Override
             protected boolean mousePressed(MouseEvent event) {
-                if (super.mousePressed(event)) {
+                if (super.mousePressed(event) && event.getButton() == 1) {
                     Engine.exit();
                     return true;
                 }

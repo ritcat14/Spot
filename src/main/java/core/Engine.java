@@ -2,8 +2,7 @@ package core;
 
 import core.graphics.Frame;
 import core.states.StateManager;
-import game.Game;
-import game.Start;
+import game.states.*;
 
 import java.awt.*;
 
@@ -30,6 +29,7 @@ public class Engine implements Runnable {
         frame = new Frame(MAX_WIDTH, MAX_HEIGHT, stateManager);
         stateManager.addState(new Start());
         stateManager.addState(new Game());
+        stateManager.addState(new Settings());
 
         engine = this;
     }
