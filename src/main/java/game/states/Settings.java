@@ -4,6 +4,7 @@ import core.graphics.Frame;
 import core.graphics.Renderer;
 import core.gui.ComponentAnchor;
 import core.gui.GButton;
+import core.gui.GContainer;
 import core.gui.GLabel;
 import core.input.Event;
 import core.input.MouseEvent;
@@ -22,10 +23,7 @@ public class Settings extends State {
 
     private Rectangle bounds;
 
-    private GLabel title;
-    private GButton save;
-    private GButton reset;
-    private GButton exit;
+    private GContainer gContainer;
 
     public Settings() {
         super(SETTINGS);
@@ -35,13 +33,16 @@ public class Settings extends State {
     public void init() {
         bounds = new Rectangle(25, 25, Frame.WIDTH - 50, Frame.HEIGHT - 50);
 
-        title = new GLabel(100, 150, 350, 150, CENTERX, "SETTINGS", staticFont.deriveFont((float)80),
-                Color.DARK_GRAY, null, MIDDLE, NONE);
-
         int stepX = WIDTH/4;
         int buttonY = HEIGHT-150;
+
+        gContainer = new GContainer(bounds, null, 
+        
+            new GLabel(100, 25, 350, 150, CENTERX, "SETTINGS", staticFont.deriveFont((float)80),
+                    Color.DARK_GRAY, null, MIDDLE, NONE),
+
                 
-        save = new GButton(stepX - 50, buttonY, 100, 50, "SAVE", staticFont.deriveFont((float)40),
+            new GButton(stepX - 50, buttonY, 100, 50, "SAVE", staticFont.deriveFont((float)40),
                 MIDDLE, NONE, ComponentAnchor.NONE) {
                     @Override
                     protected boolean mousePressed(MouseEvent event) {
@@ -50,10 +51,9 @@ public class Settings extends State {
                         }
                         return false;
                     }
-                };
-        save.setEnabled(false);              
+                }.setEnabled(false),         
 
-        reset = new GButton(stepX*2 - 50, buttonY, 120, 50, "RESET", staticFont.deriveFont((float)40),
+            new GButton(stepX*2 - 50, buttonY, 120, 50, "RESET", staticFont.deriveFont((float)40),
                 MIDDLE, NONE, ComponentAnchor.NONE) {
                     @Override
                     protected boolean mousePressed(MouseEvent event) {
@@ -63,11 +63,9 @@ public class Settings extends State {
                         }
                         return false;
                     }
-                };
+                }.setEnabled(false),
 
-        reset.setEnabled(false);
-
-        exit = new GButton(stepX*3 - 50, buttonY, 100, 50, "EXIT", staticFont.deriveFont((float)40),
+            new GButton(stepX*3 - 50, buttonY, 100, 50, "EXIT", staticFont.deriveFont((float)40),
                MIDDLE, NONE, ComponentAnchor.NONE) {
                     @Override
                     protected boolean mousePressed(MouseEvent event) {
@@ -77,41 +75,28 @@ public class Settings extends State {
                         }
                         return false;
                     }
-                };
+                }
+        );
     }
 
     @Override
     public void onEvent(Event event) {
-        save.onEvent(event);
-        reset.onEvent(event);
-        exit.onEvent(event);
+        gContainer.onEvent(event);
     }
 
     @Override
     public void update() {
-        title.update();
-        save.update();
-        reset.update();
-        exit.update();
+        gContainer.update();
     }
 
     @Override
     public void render(Renderer renderer) {
-        renderer.fillRectangle(bounds, Color.CYAN);
-
-        title.render(renderer);
-
-        save.render(renderer);
-        reset.render(renderer);
-        exit.render(renderer);
+        gContainer.render(renderer);
     }
     
     @Override
     public void close() {
-        title.close();
-        save.close();
-        reset.close();
-        exit.close();
+        gContainer.close();
     }
 
 }

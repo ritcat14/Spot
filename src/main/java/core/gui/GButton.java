@@ -29,6 +29,12 @@ public class GButton extends GLabel implements EventListener {
     }
 
     @Override
+    public void adjustLocation(int newx, int newy) {
+        super.adjustLocation(newx, newy);
+        backgroundRect.setLocation((int)(backgroundRect.getX() + newx), (int)(backgroundRect.getY() + newy));
+    }
+
+    @Override
     public void update() {
 
     }
@@ -81,8 +87,9 @@ public class GButton extends GLabel implements EventListener {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public GButton setEnabled(boolean enabled) {
         this.enabled = enabled;
+        return this;
     }
 
 }
