@@ -4,15 +4,17 @@ import core.input.Event;
 import core.input.EventDispatcher;
 import core.input.EventListener;
 import core.input.KeyEvent;
+import core.input.MouseEvent;
 import core.objects.Entity;
 import core.objects.Light;
 import game.entities.Player;
 
-import static core.files.Images.getImage;
+import static core.util.Images.getImage;
 import static core.input.Event.Type.*;
 import static core.graphics.Frame.*;
 import static game.entities.Player.*;
 import static game.maps.Tile.TILE_SIZE;
+import static core.util.Maths.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -171,10 +173,8 @@ public class Map extends Entity implements EventListener {
         EventDispatcher dispatcher = new EventDispatcher(event);
         dispatcher.dispatch(KEY_PRESSED, event1 -> keyPressed((KeyEvent) event1));
         dispatcher.dispatch(KEY_RELEASED, event1 -> keyReleased((KeyEvent) event1));
-    }
-
-    private double calculateDistance(double x1, double y1, double x2, double y2) {
-        return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
+        dispatcher.dispatch(KEY_PRESSED, event1 -> player.keyPressed((KeyEvent) event1));
+        dispatcher.dispatch(KEY_RELEASED, event1 -> player.keyReleased((KeyEvent) event1));
     }
     
 }

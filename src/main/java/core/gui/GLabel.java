@@ -29,7 +29,7 @@ public class GLabel extends GComponent {
 
     @Override
     public void render(Renderer renderer) {
-        if (colour != null) renderer.fillRectangle(this, colour);
+        if (background != null) renderer.fillRectangle(this, background);
 
         renderer.renderString(text, font, textColor, this, textAlignment, textFormat);
     }

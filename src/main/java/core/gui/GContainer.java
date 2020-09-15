@@ -64,7 +64,7 @@ public class GContainer extends GComponent {
     }
 
     public void render(Renderer renderer) {
-        if (colour != null) renderer.fillRectangle(this, colour);
+        if (background != null) renderer.fillRectangle(this, background);
         rendering = true;
 
         for (GComponent gComponent : gComponents) {
