@@ -1,0 +1,6 @@
+[submodule "src/main/java/SpotJava"]
+	path = src/main/java/SpotJava
+	url = https://github.com/ritcat14/SpotJava.git
+[submodule "src/main/java/SpotGL"]
+	path = src/main/java/SpotGL
+	url = https://github.com/ritcat14/SpotGL.git
