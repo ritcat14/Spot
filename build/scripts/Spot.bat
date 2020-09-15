@@ -82,7 +82,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\Spot-1.0.jar
+set CLASSPATH=%APP_HOME%\lib\Spot-0.2.jar
 
 @rem Execute Spot
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %SPOT_OPTS%  -classpath "%CLASSPATH%" Main %CMD_LINE_ARGS%
