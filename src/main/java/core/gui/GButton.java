@@ -13,16 +13,25 @@ public class GButton extends GLabel implements EventListener {
 
     private Rectangle backgroundRect;
     private String text = "";
-    private Color foreground;
+    private Color foreground, background;
 
     private boolean mouseOver = false;
 
-    public GButton(int x, int y, int width, int height, String text, Font font, Color background, Color foreground, Color fontColour,
-                   TextAlignment textAlignment, int textFormat, ComponentAnchor componentAnchor) {
-        super(x, y, width, height, componentAnchor, text, font, fontColour, background, textAlignment, textFormat);
-        this.foreground = foreground;
+    private boolean enabled = true;
+
+    public GButton(int x, int y, int width, int height, String text, Font font, TextAlignment textAlignment, int textFormat,
+    ComponentAnchor componentAnchor) {
+        super(x, y, width, height, componentAnchor, text, font, Color.BLACK, Color.LIGHT_GRAY, textAlignment, textFormat);
+        this.foreground = Color.DARK_GRAY;
         int fifPer = (int)Math.ceil(width * 0.15);
         this.backgroundRect = new Rectangle(this.x - (fifPer / 2), this.y, this.width + fifPer, this.height);
+        this.background = Color.LIGHT_GRAY;
+    }
+
+    @Override
+    public void adjustLocation(int newx, int newy) {
+        super.adjustLocation(newx, newy);
+        backgroundRect.setLocation((int)(backgroundRect.getX() + newx), (int)(backgroundRect.getY() + newy));
     }
 
     @Override
@@ -32,22 +41,27 @@ public class GButton extends GLabel implements EventListener {
 
     @Override
     public void render(Renderer renderer) {
-        if (mouseOver) renderer.fillRectangle(backgroundRect, foreground);
-
-        renderer.fillRectangle(this, colour);
+        if (!enabled) setColour(Color.DARK_GRAY);
+        else {
+            setColour(background);
+            if (mouseOver) renderer.fillRectangle(backgroundRect, foreground);
+        }
 
         super.render(renderer);
     }
 
     protected boolean mousePressed(MouseEvent event) {
+        if (!enabled) return false;
         return contains(event.getPosition());
     }
 
     protected boolean mouseReleased(MouseEvent event) {
+        if (!enabled) return false;
         return contains(event.getPosition());
     }
 
     protected boolean mouseMoved(MouseEvent event) {
+        if (!enabled) return false;
         mouseOver = contains(event.getPosition());
         return mouseOver;
     }
@@ -68,4 +82,14 @@ public class GButton extends GLabel implements EventListener {
     public void setForeground(Color foreground) {
         this.foreground = foreground;
     }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public GButton setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        return this;
+    }
+
 }

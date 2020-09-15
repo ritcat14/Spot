@@ -2,6 +2,6 @@ package core.states;
 
 public enum StateName {
 
-    START, GAME;
+    START, GAME, SETTINGS;
     
 }

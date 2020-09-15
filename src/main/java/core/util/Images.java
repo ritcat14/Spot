@@ -1,4 +1,4 @@
-package core.files;
+package core.util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,6 +10,8 @@ import javax.imageio.ImageIO;
 import core.states.State;
 
 public class Images {
+
+    private Images() {}
     
     public static BufferedImage getImage(String fileName) {
         BufferedImage loadedImage = null;

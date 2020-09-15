@@ -1,4 +1,4 @@
-package game;
+package game.states;
 
 import core.graphics.Renderer;
 import core.input.Event;
