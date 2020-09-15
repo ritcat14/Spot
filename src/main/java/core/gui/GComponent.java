@@ -14,6 +14,10 @@ public abstract class GComponent extends Entity {
         setAnchor();
     }
 
+    public void adjustLocation(int newx, int newy) {
+        super.setLocation(x + newx, y + newy);
+    }
+
     protected void setAnchor() {
         switch (componentAnchor) {
             case CENTERX:
