@@ -28,8 +28,10 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile group: 'org.l33tlabs.twl', name: 'pngdecoder', version: '1.0'
 
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+    compile group: 'org.joml', name: 'joml', version: '1.9.25'
 
     implementation "org.lwjgl:lwjgl"
     implementation "org.lwjgl:lwjgl-assimp"

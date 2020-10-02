@@ -1,10 +1,9 @@
-import SpotGL.GLMain;
-import SpotJava.JavaMain;
+import SpotGL.game.GLMain;
 
 public class Main {
 
     public static void main(String[] args) {
-        JavaMain.main(new String[0]);
+        GLMain.main(new String[0]);
     }
 
 }
