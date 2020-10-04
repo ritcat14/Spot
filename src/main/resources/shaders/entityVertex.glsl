@@ -1,15 +1,16 @@
-#version 400 core
+#version 330
 
-in vec4 position;
-in vec2 textureCoords;
+layout (location=0) in vec3 position;
+layout (location=1) in vec2 texCoord;
 
-out vec2 passTextureCoords;
+out vec2 outTexCoord;
 
 uniform mat4 projectionMatrix;
 uniform mat4 transformationMatrix;
+uniform mat4 viewMatrix;
 
 void main()
 {
-    gl_Position = projectionMatrix * transformationMatrix * position;
-    passTextureCoords = textureCoords;
+    gl_Position = projectionMatrix * viewMatrix * transformationMatrix * vec4(position, 1.0);
+    outTexCoord = texCoord;
 }
