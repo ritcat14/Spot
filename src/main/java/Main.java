@@ -1,8 +1,9 @@
-import core.Engine;
+import SpotGL.game.GLMain;
 
 public class Main {
 
     public static void main(String[] args) {
-        new Engine().start();
+        GLMain.main(new String[0]);
     }
+
 }
